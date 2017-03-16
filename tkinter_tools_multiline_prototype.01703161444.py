@@ -1,15 +1,21 @@
-import Tkinter as Tk
-
 """
 Tkinter Listbox with soft-returns prototype module!
 Annotated.
 Augusta Nicholas Collins
 01703131656
 
+The Listbox pane interface code in MutliLine_Single.__init__ is based on 
+the very useful recipe at 
+http://code.activestate.com/recipes/410646-tkinter-listbox-example/
+
+I have revised parts of it and added the multiline string processing,
+selection, and extended return functionality to it.
+
 If you're going to use this, put in a good word for me, yes?
-Yes?
 Thank you. <3
 """
+
+import Tkinter as Tk
 
 class MutliLine_Single(object):
     '''A basic Tkinter Listbox single-selection window that allows the use of carriage returns
@@ -27,7 +33,6 @@ any is selected, else `None`.
 items           tuplist of strings      Items to be included in the Listbox list.
                                          - Falsey elements are interpreted as spacers in the list
                                           and are not selectable.
-
     = optional arguments
 title           string                  Listbox pane title. (def: '')
 width           nonzero positive int    Listbox width, in characters (not px!) (def: 20)
@@ -59,7 +64,7 @@ abort_value     <any>                   If the selector window is closed or canc
         lb_scrollbar = Tk.Scrollbar(lb_frame)
         lb_scrollbar.pack(side=RIGHT, fill=Y)
         
-        self.lb = lb = Tk.Listbox(lb_frame, selectmode=Tk.SINGLE, width=width)
+        self.lb = lb = Tk.Listbox(lb_frame, selectmode=Tk.SINGLE, width=width) # I am working on a MULTIPLE variant of this!
         lb.pack(side=LEFT, fill=Y)
         lb_scrollbar.config(command=lb.yview)
         lb.config(yscrollcommand=lb_scrollbar.set)
