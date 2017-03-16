@@ -1,15 +1,15 @@
 """
 Tkinter Listbox with soft-returns prototype module!
-Annotated.
 Augusta Nicholas Collins
 01703131656
+Annotated.
 
-The Listbox pane interface code in MutliLine_Single.__init__ is based on 
-the very useful recipe at 
+The Listbox pane interface code in MutliLine_Single.__init__ and 
+._transmit and .run_selector methods are based on the very useful recipe at 
 http://code.activestate.com/recipes/410646-tkinter-listbox-example/
 
-I have revised parts of it and added the multiline string processing,
-selection, and extended return functionality to it.
+I have revised parts of them and added the multiline string processing,
+selection, and extended return functionality.
 
 If you're going to use this, put in a good word for me, yes?
 Thank you. <3
