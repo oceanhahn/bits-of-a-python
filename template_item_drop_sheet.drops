@@ -1,0 +1,459 @@
+[META]
+author = ANC
+created = 2017-05-02 17:15:50 (using Item Dropper help template)
+
+[README]
+_note = """
+	
+								### ###				   		### ###
+								###   HOW TO USE THESE FILES,   ###
+								###  AND HOW TO MAKE YOUR OWN!  ###
+								### ### 					### ###
+				
+		You can make as many of these data files as you like!
+		For every activity you wish to include, simply add a "SECTION" for it with the item details inside.
+		
+		 * This [README] section is not needed for normal operation and may be deleted in duplicate drop table files.
+		
+		Let me begin with a single rule common to all entries you may make in these files:
+			** POUND SIGN, HASHTAG, OCTOTHORPE: WHATEVER YOU CALL IT, DON'T
+				INCLUDE THESE '#' GUYS IN ANY OF YOUR ENTRIES. THEY WILL MESS YOU STRAIGHT UP. **
+		(I'll tell you why at the end~ <3)
+		
+		
+		 > ADDING ACTIVITIES
+			= ADDING ACTIVITY TYPES
+		An ACTIVITY is created by typing a square bracket ('['), then the word 'ACTIVITY' in all capital letters, 
+		then an underscore ('_'), then the name of the activity. Close it off with a square end-bracket and you're 
+		ready to start adding items!
+			
+		   That's 
+			[ACTIVITY_"+ <NAME OF ACTIVITY> + ] 
+			  all together!
+		   
+		   Your activity headings should look something like these:
+		 [ACTIVITY_HUNTING]
+			..for an activity called 'HUNTING'
+		 [ACTIVITY_DIGGING]
+			..for an activity called 'DIGGING'
+		 
+		 ! You can include letters and numbers and underscores in the activity name, but it's best if they're all-caps
+			and do not include symbols.
+		   
+		   
+		 > ADDING ITEMS TO ACTIVITIES
+		On the lines after the [ACTIVITY_*] section title, go ahead and start adding ITEM QUALITY RANKS!
+		 
+		There are two parameters for an item quality rank: the item selection and the drop rate.
+		 - The quality rank item list is simply a bunch of comma-separated identities listed between triple-
+			quotation marks. Few details; easy to write.
+		 - The quality rank drop rate is a whole number (integer; no decimals!) that describes how often, out of
+			every other rank, items of this type will appear.
+			
+		I will explain how to do this now..
+		
+			= NAMING QUALITY RANKS
+		An item quality rank is the name of a specific type of item you can receive as a drop. There are a few
+		rules for naming quality ranks:
+			- They cannot contain slashes ('/', '\'), pound signs ('#'), or spaces.
+			- They cannot contain spaces.
+			- The should not contain other symbols, either. (Underscores ('_') are okay!)
+			- They cannot *begin* with an underscore.
+			- They cannot end with the characters '_rate' (and you'll see why in a minute!).
+			- They ought to be in all lowercase and are case-sensitive.
+		 * Seriously, I do not know how the software might respond to symbols. You have been warned! :0
+		 
+		Valid names for quality ranks look like these:
+		 superb
+			.. for a rank called 'superb'.
+		 worthlesstrash
+			.. for a rank called 'worthlesstrash'.
+		 type_3
+			.. for a rank called 'type 3'.
+		 
+			= ADDING ITEMS
+		After the name of the quality rank, type an equals mark ('=') and then three quotation marks, add two 
+		new lines with one tab each, and then three more of the same type of quotation marks ('single' (') or 
+		'double' (") are both fine, but both sets of marks must match!).
+		
+		Between those quotation marks, add as many item names as you like, separating each individual item with a
+		comma! Feel free to repeat a single item as many times as you wish (it will become more likely to drop
+		with each repetition)! 
+		 - An item may include as many words or spaces as you like!
+		 - An item may begin with and/or include as many numbers or unique characters as you like!
+		 -  ..except for slashes ('/', '\'), pound signs ('#'), and triple-quotation marks (""", etc.).
+		 -  ..obviously, item names cannot include commas.
+		 - An item must have at	least one non-blank character.
+		 - Include as many lines between the quote marks as you like, but make sure at least the first one is tabbed!
+		 - You can actually just cram them all onto the first line and ignore tabs entirely if you like, but it's 
+			harder to maintain.
+		 ! If there are no items in the quality rank, the entire rank will be ignored regardless of its drop rate!
+		 
+		   The result should look something like:
+		   
+			awesome_tier = '''
+				spruce, moose, goose, caboose, 
+				chartreuse, moose
+					'''
+		
+		In this example, the quality rank is named 'awesome_tier', and it contains the items moose, spruce, goose,
+		caboose, and chartreuse. Because 'moose' appears twice, it will be twice as likely to drop than any other
+		singly-mentioned item.
+		
+			= DROP RATES
+		For each quality rank, you will probably want to add a drop rate! After the quotation marks ending the drop
+		item list, add a new line or two (with no tabs!) and retype the quality rank name, plus '_rate' and then an 
+		equals sign. It's important that the quality rank name is retyped exactly!
+		
+		After the equals sign, you need to enter a whole number, greater than zero.
+		 - Zeroes will prevent this tier from dropping entirely!
+		 - Negative numbers will likewise be ignored and why would you even??
+		 * Drop rates can be adjusted manually in the item dropper software so that you can fine-tune them on the spot!
+		  This feature could be useful if you wish to include special drop item ranks for special events that do not 
+		  normally appear!
+		  
+			The results should look something like these:
+			
+		 common_rate = 60
+			..in which the 'common' rank has sixty shares out of the total.
+		 awesome_tier_rate = 4
+			..in which 'awesome_tier' has four shares of the total.
+		 hannukah_event_rate = 0 # Set this manually in the software during Hannukah!
+			..in which 'hannukah_event' items will not drop unless you add shares using the software (it's easy!).
+		 
+		For example, if the 'cool_tapes' rank has ten shares, and all other	ranks (not including cool_tapes) have 990 
+		shares, then the drop rate for the cool_tapes rank is one percent, or ten out of one thousand total shares!
+		
+		The number you choose controls how likely the rank is to appear relative to the others, based on the sum
+		of all of their values. I'll explain:
+		
+			The drop rate is a number of 'shares'. When the software selects random drops, it 'collects' the shares
+			from each rank, numbers them off (so to speak), and adds them together. It then selects a random number
+			from this total, and the rank this number 'belonged' to is the chosen item set!
+			
+			In short, ranks buy 'tickets' with their shares, the tickets are pooled, and a random one is drawn. The
+			rank that ticket belonged to is selected.
+			
+			The thing to remember here is that the likelihood is always -relative to the number of shares other ranks
+			have-. If all ranks have 1000 shares, then they're all as likely to be chosen as eachother, since 1000/5000
+			is still just one in five when you boil it down.
+			
+			Here are some easy rules to remember:
+			
+			 - The smallest number of shares an active rank can have is one.
+			 - Ranks with zero shares are excluded and will not drop.
+			 
+			 - To make a rank more common, increase its share count!
+			 - To make a rank more common, decrease the share counts of every other rank!
+			
+			 - To make a rank rarer, decrease its share count!
+			 - To make a rank rarer, increase the number of shares all other ranks have!
+			 
+			 * The value you enter in your drop files is a 'BASE' drop rate! You can adjust it using the software.
+			 ! Ranks with no indicated drop rate will be given one share.
+			 
+		
+			= ON RANK ORGANIZATION..
+		Due to limitations in the ConfigParser module, the ranks may not appear in the software in the sequence
+		you record them in. A way to resolve this problem is by adding another type of element to your ACTIVITY 
+		section, called '_xseq'.
+		
+		Ranks' _xseq values are recorded exactly the same way that rank drop rates are, except instead of appending
+		'_rate' to the end of the rank name, type '_xseq' instead!
+		
+			It's not complex, either:
+			
+			 - Ranks with lower _xseq values will appear before values with greater ones.
+			 - Ranks with no listed _xseq value will be assigned 998 by default.
+			 
+			 - _xseq values can be any integer, including negative ones and zero. Decimals are not allowed.
+			 - Ranks with matching _xseq values will be listed alphabetically.
+			 
+			This is what a valid set of entries might look like:
+		 
+		 bogusrank_xseq = 1
+		 gnarlyrank_xseq = 0
+		 groovyrank_xseq = 0
+		 radicalrank_xseq = 5
+		 deadlastrank_xseq = 999
+			
+			.. would be listed in this order: 
+			 gnarlyrank, groovyrank, bogusrank, radicalrank, 
+			   tubularrank (which has no assigned xseq), deadlastrank
+		
+			 
+			= FAILURE RATES
+		Every activity ought to include a failure rate value!
+		
+		Indicate a failure rate by starting a new line (again, no tabs) with the words '_failure_rate', then an
+		equals sign, then a value to indicate how often rolls (or portions of a roll set) might fail. There are
+		no quotation marks involved here.
+		
+		There are three ways to indicate this value:
+			 * Any percentage between 0%% and 100%%. Decimal values are okay. ==BECAUSE OF VARIOUS PROBLEMS WITH THE WAY PYTHON WORKS, YOU NEED TO INCLUDE -TWO- PERCENT SIGNS!!==
+				I suppose this is fairly self-explanatory. 
+			 * A number with a decimal place, between 0.0 and 1.0.
+				This will be treated as a probability; multiply it by 100 to get a percentage that a roll will 
+				fail, or the maximum number of rolls in a set which might fail (I'll explain the difference in
+				just a minute!)
+				0.4, for instance, is 40%%; 0.012 is 1.2%%.
+			 * A fraction with a forward slash in it ('/'), between 0/x and x/x.
+				Type any simple, positive fraction here, with the numerator and denominator separated by a slash.
+				It must evaluate to less than 1.0.
+				As examples, '1/5' is equal to 20%%; '9/100' is equal to 9%%, and '7.5/22' is slightly more than 33.3%%.
+			
+			So for instance, this could look like:
+		 _failure_rate = 15%%
+			or
+		 _failure_rate = 0.15
+			or
+		 _failure_rate = 3/20
+			* all three examples are equivalent in this case.
+			
+		If you do not select a failure rate, it will automatically be set to zero percent.
+			
+			= FAILURE METHOD
+		An activity's failure rate refers to the probability that a roll will produce nothing at all, and the
+		software has two modes of calculating this: 'GENEROUS' and 'UNFORGIVING.'
+			- In 'GENEROUS' mode, the failure rate is taken to be a maximum number of failed rolls out of the
+				total count. If the failure rate is one in four, then, in a twelve-roll drop, UP TO THREE may
+				be empty; conversely, AT LEAST NINE ITEMS will drop.
+			- In 'UNFORGIVING' mode, the failure rate is applied to -every roll-: if the rate is one in four,
+				it simply means that there is a 25%% chance that each roll will result in no items. It is POSSIBLE
+				for EVERY ROLL TO FAIL; it is POSSIBLE for EVERY ROLL TO DROP AN ITEM. The failure rate value 
+				only controls how likely a roll is to yield no item.
+			- Once a roll has been determined to have been 'successful', a quality rank, then item name, is drawn.
+		
+		Which of these settings you choose is determined by you in the pre-roll phase, after the data is loaded.
+		By default, it's 'GENEROUS', but you can change it using the software.
+			 
+			 
+		 > MODIFIERS AND YOU
+		You may also choose to add 'modifiers' to your item drops! A modifier is a word that comes before the 
+		name of the item dropped and is chosen randomly from a list composed in a similar way to an item quality
+		rank.
+		
+			= NAMING AND POPULATING MODIFIER GROUPS
+		Add 'modifiers' to any activity you wish by adding a new SECTION the same way you would
+		add a new ACTIVITY, but instead of the word 'ACTIVITY_', type 'MODIFIERS_', and then the activity name.
+		 - If you do not include the activity name in the section title, the modifiers will be treated as defaults 
+			for EVERY ACTIVITY LISTED unless they have MODIFIER_SPECIFIC_ACTIVITY sections of their own!
+		 - If there is no MODIFIER section for an ACTIVITY and no generic section is listed, that activity will
+			not receive modifiers.
+			
+		There is a single list of modifiers, and they can be good or bad. The list is compiled in the same way as 
+		a quality rank item set: on a new line, type 'modifiers', equals sign, then three quote marks. Enter a 
+		comma-separated list of modifier words after that, then three more of the same quote marks. Again, each line
+		needs a tab! Modifiers follow the same repetition rules as item lists.
+			
+			For instance:
+		
+		 [MODIFIERS_HUNTING]
+		 modifiers = '''
+		 	big, brusque, burnt, brave,
+		 	tiny, timid, turquoise, tense,
+					'''
+			* These modifiers are applied only to hunting drops!
+		
+		 [MODIFIERS]
+		 modifiers = '''
+		 	drunk, radioactive, reticent, spastic,
+		 	ill, ripped, dudely, itchy
+					'''
+			* These modifiers can be applied to all activities which do not have their own, specific MODIFIER sections!
+			* These modifiers may be applied together with the modifiers of activities that have their own sections, too!
+		
+			= MODIFICATION RATES
+		Modifiers also have their own occurrence rate, given in the 'modifier_rate' entry. Unlike with quality rank
+		rates, this is simply a percentage that any item will receive a modifier. It looks like this:
+		
+			modifier_rate = 5.5
+		
+		This example gives a 5.5%% modifier rate, so eleven out of two-hundred item drops will have one of the modifer
+		words prepended to it.
+		 ! If you forget to include the modifier rate value, it will default to zero!
+		 - If the modifers list is empty, there will be no modifiers included, no matter the rate.
+		
+			= MODIFY THE UNMODIFIED
+		You can also include a word to attach to items which have NOT received a modifier! 
+		This is done with the 'unmodified' value. If you don't include the entry, or leave the value blank, there will be 
+		no word attached to an unmodified drop item.
+		
+			unmodified = 'plain'
+		
+		In this example, a drop item which did NOT receive a modifier would be given the title, 'plain'. So an unmodified
+		'caboose' would return 'plain caboose'; an unmodified 'pretzel' would be a 'plain pretzel'.
+			 
+			
+			= FINE-TUNING MODIFIER SELECTION
+		There is a slightly-more-complicated way to set modifier data!
+		This method replaces the triple-quotation-marks with braces (curly-brackets; '{}') and involves the
+		use of share values for lists of modifier options!
+		
+			Here's an example:
+			
+		 modifiers = {
+			1 : 'sparkly, angry, raging',
+			10 : 'brown, red, mischievous',
+			50 : 'toxic'
+					}
+					
+		 modifier_rate = 50
+			
+		This example follows the following format, which I will explain in more detail:
+			{ <integer: number of shares for this rank> : "<modifier>, <modifier>, .." ,
+					...
+			}
+			
+		Each modifier item in the list will be given, individually, the number of shares indicated by 
+		the integer. In this example, for instance, 'brown' has a 10/83 chance of being selected, as do
+		'red' and 'mischievous'.
+		
+			There are a few important things to remember!
+		 - Make sure you add a comma after each comma-separated list of modifiers!
+		 - Items may appear in as many different sets as you choose, and will gain shares for each repetition.
+		 - The `modifier_rate` and `unmodified` values still apply in the normal way. In the above example, there
+			is a fifty-percent chance that any item will have NO modifier, and a fifty percent chance that a
+			modifier will be selected from the list.
+		 - All modifiers for a specific number of shares must appear in the same rank! If a number of shares is 
+			repeated, only one set of items	will be recognized by the software. Thanks, ConfigParser...
+			
+				For example, in:
+			modifiers = {
+				10 : 'grey, gray, waffling',
+				12 : '''girly, macho,
+						sexless, well-behaved''',
+				10 : 'choking'
+						}
+					
+			The list 'grey, gray, waffling' may overwrite, or be overwritten by, 'choking', because they both
+			share the same number of shares! To prevent this, simply merge the lists in that modifiers section.
+			
+			
+			= COMBINING MODIFIER SETS
+		
+		If you wish, you may use both an activity's specific modifiers AND the generic set together! Simply select that
+		option from the pull-down menu in the MODIFIER DETAILS section of the software and away you go!
+		
+		It is safe to combine two sets of specifically-weighted modifiers that have share counts in common; the lists of
+		modifier items will combine without overwriting each other, like so:
+		
+			[MODIFIERS]		# generic modifier list
+		modifiers = {
+			3 : "eggy, runny",
+			5 : "spoony, bardish",
+			12 : "piquey',
+					}
+			
+			[MODIFIERS_SHAKESPEAREAN] # modifiers for an activity called 'SHAKESPEAREAN'. I don't judge here.
+		modifiers = {
+			3 : "Leary",
+			5 : "MacBethic, Juliettish",
+			10 : "Andronic",
+			12 : "Romeon",
+					}
+					
+		..combine to form a set with the following distributions, used by the software:
+			
+			  shares 	  modifier items
+				3 		Leary, eggy, runny
+				5 		MacBethic, Juliettish, spoony, bardish
+				10 		Andronic
+				12 		Romeon, piquey
+		
+		You can even combine lists with specific weightings (noted in the previous section) with the default comma-list
+		series of modifiers. If you do, you will be prompted to give a Modifier Weight to whichever modifier table is in
+		comma-separated list form. All items in the list will have this many shares in the modifier lottery!
+		
+		 - The default number of shares for unweighted modifiers is 1. You may change this in the configuration manager.
+		 - If you wish to specify a default weight for comma-separated lists in this file, you may do so by including an
+			entry in the appropriate section called "share_weight". If you do not include it, the default will be used.
+		 - share_weight must be a positive, non-zero integer.
+		 ! Whether you provide a default or not, you may adjust the weighting manually in the software.
+		 
+		 * In your data files, `share_weight` should look like this:
+				share_weight = 5
+				
+				 * This will give five shares to every modifier in this list when you combine a comma-separated sequence
+				 of modifiers with a fine-tuned set of them.
+			
+		For instance, if you have a generic set of modifiers:
+		
+			[MODIFIERS]
+			modifiers = '''
+				orange, blue, green,
+				small, gaunt, hairy,
+					'''
+			share_weight = 5
+			
+		..and an activity-specific set of modifiers:
+		
+			[MODIFIERS_EATING]
+			modifiers = {
+				8 : "fluffy, woody, sour",
+				5 : "chewy, lumpy",
+				2 : "aromatic",
+						}
+		
+		..the resulting modifier dictionary will read like this:
+		
+			  shares 	  modifiers
+				8 		fluffy, woody, sour
+				5 		chewy, lumpy, orange, blue, green, small, gaunt, hairy
+				2 		aromatic
+			
+		When you combine two comma-separated lists, a modifier will be selected randomly from the combined lists.
+		If both lists have weightings (and they are different from one another, the software will ask you if you want to use 
+		them to weight one set against the other, giving the set with the greater value more shares relative to the other.
+		
+			 
+		 > ON NOTES
+		You can add a note to any section you wish by adding '_note = ' to a fresh line (no tabs!), adding three single-
+		or double-quotation marks, as much of whatever text you want, and then three more of the same type of quotation mark.
+		
+		These notes will not interfere with the section data! :D
+		
+		You can use number signs if you like but if you put them before the final quotation marks and on the same line as them,
+		it'll be trouble.
+		 
+		 > HAVE FUN!
+		Anyway, that ought to be all you need to know to get started!
+		I hope this is useful to you, and have fun itemizing! :D
+		Best of luck out there,
+		 -- Augusta <3
+			01703271807
+		 
+		 * Okay, so I promised I would explain the pound-sign thing. The reason why you ought to never use these is
+		 because the software, when it reads the fill, ignores -everything on that line after the character-.
+		 It just -stops reading the line- and moves on to the next.
+		 This is a huge problem when you mean to include more entries, or when you finish an item set with your
+		 '''-marks after the pound sign, or when you use it in a quality class and the parser -stops reading mid-way-.
+		 
+		 This does not mean you cannot use them if you are extremely careful! If you use one at the end of a line, and
+		 then want to add a comment, they're very useful! But you have to break the line with the RETURN key afterwards
+		 so that the interpreter starts reading again afterwards; WORD WRAP and SOFT RETURNS do not count here!!
+		 
+		 Your best choice is to not use them at all, but if you've got a lot of chutzpah and are willing to endanger
+		 your own work, feel free! :y
+	"""
+
+[ACTIVITY_ACTYNAME]
+_note = """
+		Replace 'ACTYNAME' in ACTIVITY_ACTYNAME with the desired activity name!
+		Add ranks by copying the template below and filling it in as needed.
+	"""
+rename_this_rank = """
+		one thing, two thing
+			"""
+rename_this_rank_rate = 1
+
+[MODIFIERS_ACTYNAME]
+_note = """
+		Replace 'ACTYNAME' in MODIFIERS_ACTYNAME with the name of the activity to recieve these modifiers!
+		(Remove '_ACTYNAME' without replacing it for GENERIC modifiers!)
+		Delete this entire section if you do not wish to include modifiers at all!
+	"""
+modifiers = """
+		(replace, this, text, with a, comma-separated, list of, modifiers!)
+			"""
+modifer_rate = 25
